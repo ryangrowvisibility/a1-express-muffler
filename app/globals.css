@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+:root {
+  --bg: oklch(0.985 0.003 90);
+  --tint: oklch(0.955 0.008 90);
+  --ink: oklch(0.22 0.01 260);
+  --muted: oklch(0.45 0.012 260);
+  --line: oklch(0.89 0.008 90);
+  --brand: oklch(0.3 0.015 260);
+  --brand-deep: oklch(0.23 0.012 260);
+  --brand-soft: oklch(0.93 0.006 260);
+  --cta: oklch(0.86 0.17 92);
+  --cta-hover: oklch(0.81 0.17 88);
+  --star: oklch(0.78 0.16 75);
+  --accent: oklch(0.52 0.16 42);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-tint: var(--tint);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-cta: var(--cta);
+  --color-cta-hover: var(--cta-hover);
+  --color-star: var(--star);
+  --color-accent: var(--accent);
+  --font-head: var(--font-heading);
+}
+
+html {
+  background: var(--bg) !important;
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  background: var(--bg) !important;
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading), Georgia, serif;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.btn {
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 200ms ease, box-shadow 200ms ease;
+}
+.btn:active { transform: scale(0.97); }
+
+.lift {
+  transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 240ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -24px oklch(0.22 0.01 260 / 0.4); }
+}
+
+.rise { animation: rise 600ms cubic-bezier(0.23, 1, 0.32, 1) both; }
+.rise-2 { animation-delay: 90ms; }
+.rise-3 { animation-delay: 180ms; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+details summary { list-style: none; cursor: pointer; }
+details summary::-webkit-details-marker { display: none; }
+details .plus { transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1); }
+details[open] .plus { transform: rotate(45deg); }
+
+:focus-visible { outline: 3px solid var(--cta); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise, .reveal { animation: none !important; }
+  .lift, .btn, details .plus { transition: none !important; }
+}
